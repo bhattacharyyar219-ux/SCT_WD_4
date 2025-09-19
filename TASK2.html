@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Progress Tracker</title>
+    <link rel="stylesheet" href="TASK2.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <h1>Task Progress Tracker</h1>
+        
+        <!-- Stats Container -->
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number" id="total-tasks">0</div>
+                <div class="stat-label">Total Tasks</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="completed-tasks">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="pending-tasks">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="progress-percentage">0%</div>
+                <div class="stat-label">Progress</div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div id="progressbar">
+                <div id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Task Input Form -->
+        <div class="task-form-container">
+            <form id="task-form">
+                <div class="form-row">
+                    <input type="text" id="task-input" class="input" placeholder="Enter a new task..." required>
+                    <button type="submit" id="add-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="form-options">
+                    <div class="form-group">
+                        <label for="priority-select">Priority:</label>
+                        <select id="priority-select" class="select-input">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category-select">Category:</label>
+                        <select id="category-select" class="select-input">
+                            <option value="general">General</option>
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="health">Health</option>
+                            <option value="education">Education</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="due-date">Due Date:</label>
+                        <input type="date" id="due-date" class="date-input">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <textarea id="task-notes" class="textarea-input" placeholder="Add notes or description (optional)..." rows="2"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Task List -->
+        <div class="task-list-container">
+            <h2>Your Tasks</h2>
+            <div id="task-list" class="task-list">
+                <!-- Tasks will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="search-filter-section">
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search tasks...">
+                <button id="search-btn" class="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="M21 21l-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label>Filter by Status:</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                        <button class="filter-btn" data-filter="overdue">Overdue</button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Filter by Priority:</label>
+                    <div class="priority-filters">
+                        <button class="priority-filter-btn" data-priority="all">All</button>
+                        <button class="priority-filter-btn" data-priority="high">High</button>
+                        <button class="priority-filter-btn" data-priority="medium">Medium</button>
+                        <button class="priority-filter-btn" data-priority="low">Low</button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Filter by Category:</label>
+                    <select id="category-filter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="general">General</option>
+                        <option value="work">Work</option>
+                        <option value="personal">Personal</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="health">Health</option>
+                        <option value="education">Education</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Sort by:</label>
+                    <select id="sort-select" class="filter-select">
+                        <option value="created">Date Created</option>
+                        <option value="due">Due Date</option>
+                        <option value="priority">Priority</option>
+                        <option value="name">Name</option>
+                        <option value="category">Category</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button id="export-btn" class="action-btn export-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7,10 12,15 17,10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Export Tasks
+            </button>
+            <button id="import-btn" class="action-btn import-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17,8 12,3 7,8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Import Tasks
+            </button>
+            <button id="theme-toggle" class="action-btn theme-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                Light Theme
+            </button>
+            <button id="clear-all-btn" class="action-btn clear-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3,6 5,6 21,6"></polyline>
+                    <path d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
+                </svg>
+                Clear All
+            </button>
+        </div>
+
+        <!-- Hidden file input for import -->
+        <input type="file" id="import-file" accept=".json" style="display: none;">
+    </div>
+
+    <script src="TASK2.js"></script>
+</body>
+</html>
